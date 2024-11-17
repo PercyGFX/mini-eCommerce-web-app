@@ -4,16 +4,17 @@ import Navigation from "./Navigation";
 import Image from "next/image";
 import Tables from "./Table";
 
-function AllProducts() {
+function Favourite() {
   return (
     <div>
       <h1 className=" uppercase text-4xl font-bold tracking-widest top-gap">
-        Products
+        FAVOURITE PRODUCTS
       </h1>
       <Navigation />
+
       <Tables />
     </div>
   );
 }
 
-export default AllProducts;
+export default Favourite;

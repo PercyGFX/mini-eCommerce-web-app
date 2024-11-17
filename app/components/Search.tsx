@@ -11,7 +11,11 @@ function AllProducts() {
         Products
       </h1>
       <Navigation />
-      <Tables />
+      <div className=" my-6">
+        <p className=" text-gray-500 text-2xl font-semibold">
+          4 result found for 'Books'
+        </p>
+      </div>
     </div>
   );
 }
