@@ -1,0 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.top-gap {
+  @apply pt-[64px] md:pt-[96px];
+}
