@@ -1,4 +1,5 @@
-import React from "react";
+"use client";
+import React, { useState } from "react";
 import {
   Table,
   TableBody,
@@ -8,8 +9,22 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import {
+  Modal,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+  Button,
+} from "@nextui-org/react";
 
 function Tables() {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const handleDelete = () => {
+    // Handle delete logic here
+    setIsOpen(false);
+  };
   return (
     <div className="my-6 text-lg">
       <Table>
@@ -49,7 +64,10 @@ function Tables() {
             <TableCell>${24.0}</TableCell>
             <TableCell className="text-right">
               <div className="flex justify-end gap-3">
-                <button className="text-blue-600">
+                <button
+                  className="text-blue-600"
+                  onClick={() => setIsOpen(true)}
+                >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     className="h-5 w-5"
@@ -102,6 +120,31 @@ function Tables() {
           </TableRow>
         </TableBody>
       </Table>
+
+      {/* modal */}
+
+      <Modal isOpen={isOpen} onClose={() => setIsOpen(false)} backdrop="blur">
+        <ModalContent>
+          <ModalHeader className="flex flex-col gap-1">
+            ARE YOU SURE?
+          </ModalHeader>
+          <ModalBody>
+            <p>You will not be able to undo this action if you proceed!</p>
+          </ModalBody>
+          <ModalFooter>
+            <Button
+              color="default"
+              variant="bordered"
+              onPress={() => setIsOpen(false)}
+            >
+              Cancel
+            </Button>
+            <Button color="primary" onPress={handleDelete}>
+              Delete
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
     </div>
   );
 }
