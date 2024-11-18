@@ -19,6 +19,8 @@ import {
 } from "@nextui-org/react";
 import { IProduct } from "../utils/types/products";
 import Link from "next/link";
+import { requestDeleteProduct } from "../store/slices/products.slice";
+import { useDispatch } from "react-redux";
 
 interface TableProps {
   products: IProduct[];
@@ -26,12 +28,20 @@ interface TableProps {
 
 function Tables({ products }: TableProps) {
   const [isOpen, setIsOpen] = useState(false);
+  const dispatch = useDispatch();
+  const [selectedId, setSelectedId] = useState<string>("");
 
   console.log(products, "products");
 
-  const handleDelete = () => {
-    // Handle delete logic here
+  const handleDelete = async () => {
+    dispatch(requestDeleteProduct(selectedId as any));
+    setSelectedId("");
     setIsOpen(false);
+  };
+
+  const handleOpenModal = (id: string) => {
+    setSelectedId(id);
+    setIsOpen(true);
   };
   return (
     <div className="my-6 text-lg">
@@ -77,7 +87,7 @@ function Tables({ products }: TableProps) {
                 <div className="flex justify-end gap-3">
                   <button
                     className="text-blue-600"
-                    onClick={() => setIsOpen(true)}
+                    onClick={() => handleOpenModal(product._id)}
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"

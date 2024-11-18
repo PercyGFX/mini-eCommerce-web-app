@@ -1,10 +1,17 @@
 import { call, put, delay } from "redux-saga/effects";
-import { getProducts, addProduct, editProduct } from "../requests/products";
+import {
+  getProducts,
+  addProduct,
+  editProduct,
+  deleteProduct,
+} from "../requests/products";
 import {
   handleAllProducts,
   errorProducts,
   handleAddProduct,
   handleEditProduct,
+  handleDeleteProduct,
+  requestProducts,
 } from "../../slices/products.slice";
 import toast from "react-hot-toast";
 
@@ -61,5 +68,25 @@ export function* handleEditProducts(action: any): Generator<any, void, any> {
       errorProducts(err.response?.data?.error || "Failed to edit product")
     );
     toast.error("Failed to edit product");
+  }
+}
+
+// delete product
+
+export function* handleDeleteProducts(action: any): Generator<any, void, any> {
+  try {
+    const response = yield call(deleteProduct, action.payload);
+    if (response) {
+      const { data } = response;
+      yield put(handleDeleteProduct(action.payload));
+      toast.success("Product deleted successfully");
+      // fetch al products again
+      //yield call(requestProducts);
+    }
+  } catch (err: any) {
+    yield put(
+      errorProducts(err.response?.data?.error || "Failed to delete product")
+    );
+    toast.error("Failed to delete product");
   }
 }

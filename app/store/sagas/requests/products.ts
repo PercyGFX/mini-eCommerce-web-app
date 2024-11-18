@@ -27,3 +27,15 @@ export function editProduct(data: any) {
     }
   );
 }
+
+// delete product
+
+export function deleteProduct(id: string) {
+  return instance.delete(
+    `${process.env.NEXT_PUBLIC_BACKEND_API}/product/delete`,
+    {
+      data: { id },
+      headers: { "Content-Type": "application/json" },
+    }
+  );
+}

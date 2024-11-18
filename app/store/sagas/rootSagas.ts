@@ -1,6 +1,16 @@
 import { takeLatest } from "redux-saga/effects";
-import { handleAllProduct, handleAddProducts, handleEditProducts } from "./handlers/products";
-import { requestProducts, requestAddProduct, requestEditProduct } from "../slices/products.slice";
+import {
+  handleAllProduct,
+  handleAddProducts,
+  handleEditProducts,
+  handleDeleteProducts,
+} from "./handlers/products";
+import {
+  requestProducts,
+  requestAddProduct,
+  requestEditProduct,
+  requestDeleteProduct,
+} from "../slices/products.slice";
 
 export function* watcherSaga() {
   // all products
@@ -11,4 +21,8 @@ export function* watcherSaga() {
 
   // edit product
   yield takeLatest(requestEditProduct.type, handleEditProducts);
+
+  // delete product
+
+  yield takeLatest(requestDeleteProduct.type, handleDeleteProducts);
 }

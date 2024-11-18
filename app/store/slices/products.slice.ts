@@ -24,6 +24,7 @@ const productSlice = createSlice({
     },
     handleDeleteProduct: (state, action) => {
       const productId = action.payload;
+      state.loading = false;
       state.products = state.products.filter((p) => p._id !== productId);
     },
     handleEditProduct: (state, action) => {
@@ -51,7 +52,9 @@ const productSlice = createSlice({
     requestEditProduct: (state) => {
       state.addLoading = true;
     },
-    requestDeleteProduct: (state) => {},
+    requestDeleteProduct: (state) => {
+      state.loading = true;
+    },
 
     //errors
     errorProducts: (state, action) => {
