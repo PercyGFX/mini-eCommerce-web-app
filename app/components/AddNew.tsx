@@ -1,10 +1,19 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import { Input, Button, Card, Textarea } from "@nextui-org/react";
 import { useForm, Controller } from "react-hook-form";
+import { Spinner } from "@nextui-org/react";
+import { requestAddProduct } from "../store/slices/products.slice";
+import { useDispatch, useSelector } from "react-redux";
 
 function AddNewProduct() {
+  const [preview, setPreview] = useState<string[]>([]);
+  const [mainImageIndex, setMainImageIndex] = useState(0);
+
+  const dispatch = useDispatch();
+  const products = useSelector((state: any) => state.products);
+
   const {
     control,
     handleSubmit,
@@ -21,7 +30,29 @@ function AddNewProduct() {
   });
 
   const onSubmit = (data: any) => {
-    console.log(data);
+    const formData = new FormData();
+    formData.append("sku", data.sku);
+    formData.append("name", data.name);
+    formData.append("quantity", data.quantity);
+    formData.append("description", data.description);
+
+    //main image
+    formData.append("mainImage", data.images[mainImageIndex]);
+
+    //other images
+    for (let i = 0; i < data.images.length; i++) {
+      if (i !== mainImageIndex) {
+        formData.append("otherImages", data.images[i]);
+      }
+    }
+
+    dispatch(requestAddProduct(formData as any));
+  };
+
+  const handleImageChange = (e: any) => {
+    const files = Array.from(e.target.files);
+    const urls = files.map((file: any) => URL.createObjectURL(file));
+    setPreview(urls);
   };
 
   return (
@@ -122,12 +153,28 @@ function AddNewProduct() {
                   type="file"
                   multiple
                   accept="image/jpeg,image/png"
-                  description="JPEG, PNG (Maximum file size 2MB)"
-                  {...field}
-                  className=" max-w-[200px]"
+                  onChange={(e) => {
+                    field.onChange(e.target.files);
+                    handleImageChange(e);
+                  }}
                 />
               )}
             />
+
+            <div className="grid grid-cols-4 gap-4 my-6">
+              {preview.map((url, index) => (
+                <div key={index} className="relative">
+                  <img src={url} className="w-full h-32 object-cover rounded" />
+                  <input
+                    type="radio"
+                    name="mainImage"
+                    checked={index === mainImageIndex}
+                    onChange={() => setMainImageIndex(index)}
+                    className="absolute top-2 right-2"
+                  />
+                </div>
+              ))}
+            </div>
           </div>
           <div className="flex justify-end">
             <Button
@@ -135,6 +182,7 @@ function AddNewProduct() {
               color="primary"
               size="lg"
               onClick={handleSubmit(onSubmit)}
+              isLoading={products.addLoading}
             >
               Add product
             </Button>

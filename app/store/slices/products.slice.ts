@@ -1,8 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { error } from "console";
 
 interface IProductState {
   products: any[];
   loading: boolean;
+  addLoading?: boolean;
   error: string | null;
 }
 
@@ -18,6 +20,7 @@ const productSlice = createSlice({
   reducers: {
     handleAddProduct: (state, action) => {
       state.products.push(action.payload);
+      state.addLoading = false;
     },
     handleDeleteProduct: (state, action) => {
       const productId = action.payload;
@@ -42,21 +45,22 @@ const productSlice = createSlice({
     requestProducts: (state) => {
       state.loading = true;
     },
-    requestAddProduct: (state) => {},
+    requestAddProduct: (state) => {
+      state.addLoading = true;
+    },
     requestEditProduct: (state) => {},
     requestDeleteProduct: (state) => {},
 
-
     //errors
     errorProducts: (state, action) => {
-        state.error = action.payload;
-        state.loading = false
-    }
+      state.error = action.payload;
+      state.loading = false;
+    },
+    errorAddProduct: (state, action) => {
+      state.error = action.payload;
+      state.addLoading = false;
+    },
   },
-
- 
-
-  
 });
 
 export const {
@@ -68,7 +72,7 @@ export const {
   requestAddProduct,
   requestEditProduct,
   requestDeleteProduct,
-  errorProducts
+  errorProducts,
 } = productSlice.actions;
 
 export const productReducer = productSlice.reducer;

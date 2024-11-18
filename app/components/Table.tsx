@@ -60,7 +60,10 @@ function Tables({ products }: TableProps) {
               </TableCell>
               <TableCell>
                 <img
-                  src={product.mainImage}
+                  src={
+                    `${process.env.NEXT_PUBLIC_BACKEND_API}/uploads/${product.mainImage}` ||
+                    "/placeholder.png"
+                  }
                   alt={product.name}
                   width={66}
                   height={66}
