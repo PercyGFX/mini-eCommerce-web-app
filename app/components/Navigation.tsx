@@ -1,15 +1,32 @@
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 function Navigation() {
+  const [searchQuery, setSearchQuery] = useState("");
+  const router = useRouter();
+
+  // search
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      router.push(`/search?q=${encodeURIComponent(searchQuery)}`);
+    }
+  };
+
   return (
     <div className="flex justify-between items-center">
       {/* search box */}
-      <div className="w-full px-4 py-3 rounded-full bg-[#F7F7F7]/90 focus:outline-none focus:ring-2 focus:ring-[#001EB9] placeholder-gray-500 flex gap-x-4 max-w-[600px] my-6">
+      <form
+        onSubmit={handleSearch}
+        className="w-full px-4 py-3 rounded-full bg-[#F7F7F7]/90 focus:outline-none focus:ring-2 focus:ring-[#001EB9] placeholder-gray-500 flex gap-x-4 max-w-[600px] my-6"
+      >
         <input
           type="text"
           placeholder="Search for products"
           className="bg-[#F7F7F7]/90 mx-2 w-full focus:outline-none"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
         />
         <button
           type="submit"
@@ -31,7 +48,7 @@ function Navigation() {
           </svg>
           Search
         </button>
-      </div>
+      </form>
 
       {/* new product */}
       <div>

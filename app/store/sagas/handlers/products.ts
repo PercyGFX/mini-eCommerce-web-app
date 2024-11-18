@@ -51,7 +51,7 @@ export function* handleEditProducts(action: any): Generator<any, void, any> {
     const response = yield call(editProduct, action.payload);
     if (response) {
       const { data } = response;
-      console.log(data);
+      console.log(data, "data from handler");
       yield put(handleEditProduct(data));
       toast.success("Product updated successfully");
       window.location.href = "/";

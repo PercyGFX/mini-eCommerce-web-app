@@ -13,9 +13,6 @@ type EditProductProps = {
 };
 
 function EditProduct({ id }: EditProductProps) {
-  const [preview, setPreview] = useState<string[]>([]);
-  const [mainImageIndex, setMainImageIndex] = useState(0);
-
   const dispatch = useDispatch();
   const products = useSelector((state: any) => state.products);
 
@@ -43,12 +40,6 @@ function EditProduct({ id }: EditProductProps) {
       id: id,
     };
     dispatch(requestEditProduct(postData as any));
-  };
-
-  const handleImageChange = (e: any) => {
-    const files = Array.from(e.target.files);
-    const urls = files.map((file: any) => URL.createObjectURL(file));
-    setPreview(urls);
   };
 
   return (
