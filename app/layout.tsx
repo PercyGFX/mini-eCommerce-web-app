@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import { Providers } from "./Providers";
+import { Toaster } from "react-hot-toast";
 
 const satoshi = localFont({
   src: [
@@ -57,11 +58,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <Providers>
-        <body className={`${satoshi.variable} font-sans antialiased`}>
-          {children}
-        </body>
-      </Providers>
+      <body className={`${satoshi.variable} font-sans antialiased`}>
+        <Toaster />
+        <Providers>{children}</Providers>
+      </body>
     </html>
   );
 }

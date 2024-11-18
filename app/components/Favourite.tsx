@@ -12,7 +12,7 @@ function Favourite() {
       </h1>
       <Navigation />
 
-      <Tables />
+      {/* <Tables /> */}
     </div>
   );
 }
