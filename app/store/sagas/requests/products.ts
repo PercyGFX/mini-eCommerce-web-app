@@ -15,3 +15,15 @@ export function addProduct(data: FormData) {
     }
   );
 }
+
+// edit product
+
+export function editProduct(data: any) {
+  return instance.put(
+    `${process.env.NEXT_PUBLIC_BACKEND_API}/product/edit-product`,
+    data,
+    {
+      headers: { "Content-Type": "application/json" },
+    }
+  );
+}

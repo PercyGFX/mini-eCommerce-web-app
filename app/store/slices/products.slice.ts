@@ -48,16 +48,15 @@ const productSlice = createSlice({
     requestAddProduct: (state) => {
       state.addLoading = true;
     },
-    requestEditProduct: (state) => {},
+    requestEditProduct: (state) => {
+      state.addLoading = true;
+    },
     requestDeleteProduct: (state) => {},
 
     //errors
     errorProducts: (state, action) => {
       state.error = action.payload;
       state.loading = false;
-    },
-    errorAddProduct: (state, action) => {
-      state.error = action.payload;
       state.addLoading = false;
     },
   },

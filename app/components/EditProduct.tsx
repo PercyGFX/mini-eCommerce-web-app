@@ -4,7 +4,7 @@ import Image from "next/image";
 import { Input, Button, Card, Textarea } from "@nextui-org/react";
 import { useForm, Controller } from "react-hook-form";
 import { Spinner } from "@nextui-org/react";
-import { requestAddProduct } from "../store/slices/products.slice";
+import { requestEditProduct } from "../store/slices/products.slice";
 import { useDispatch, useSelector } from "react-redux";
 import toast from "react-hot-toast";
 
@@ -38,23 +38,11 @@ function EditProduct({ id }: EditProductProps) {
   });
 
   const onSubmit = (data: any) => {
-    const formData = new FormData();
-    formData.append("sku", data.sku);
-    formData.append("name", data.name);
-    formData.append("quantity", data.quantity);
-    formData.append("description", data.description);
-
-    //main image
-    formData.append("mainImage", data.images[mainImageIndex]);
-
-    //other images
-    for (let i = 0; i < data.images.length; i++) {
-      if (i !== mainImageIndex) {
-        formData.append("otherImages", data.images[i]);
-      }
-    }
-
-    dispatch(requestAddProduct(formData as any));
+    const postData = {
+      ...data,
+      id: id,
+    };
+    dispatch(requestEditProduct(postData as any));
   };
 
   const handleImageChange = (e: any) => {
