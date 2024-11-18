@@ -8,12 +8,19 @@ import { requestAddProduct } from "../store/slices/products.slice";
 import { useDispatch, useSelector } from "react-redux";
 import toast from "react-hot-toast";
 
-function AddNewProduct() {
+type EditProductProps = {
+  id: string;
+};
+
+function EditProduct({ id }: EditProductProps) {
   const [preview, setPreview] = useState<string[]>([]);
   const [mainImageIndex, setMainImageIndex] = useState(0);
 
   const dispatch = useDispatch();
   const products = useSelector((state: any) => state.products);
+
+  // filter product : todo can be use seperate api to get single product//
+  const product = products?.products?.find((p: any) => p._id === id);
 
   const {
     control,
@@ -22,20 +29,15 @@ function AddNewProduct() {
   } = useForm({
     mode: "all",
     defaultValues: {
-      sku: "",
-      name: "",
-      quantity: "1",
-      description: "",
-      images: "",
+      sku: product?.sku || "",
+      name: product?.name || "",
+      quantity: product?.quantity?.toString() || "1",
+      description: product?.description || "",
+      //images: product?.images || "",
     },
   });
 
   const onSubmit = (data: any) => {
-    if (!data.images || data.images.length < 2) {
-      toast.error("Please upload at least 2 images");
-      return;
-    }
-
     const formData = new FormData();
     formData.append("sku", data.sku);
     formData.append("name", data.name);
@@ -67,10 +69,7 @@ function AddNewProduct() {
         <h1 className=" uppercase text-4xl font-bold tracking-widest ">
           Products{" "}
         </h1>
-        <p className=" text-2xl text-[#001EB9] font-semibold">
-          {" "}
-          Add new product
-        </p>
+        <p className=" text-2xl text-[#001EB9] font-semibold"> Edit Product</p>
       </div>
 
       {/* form */}
@@ -151,7 +150,7 @@ function AddNewProduct() {
 
           <div>
             <p className="mb-2">Product Images</p>
-            <Controller
+            {/* <Controller
               name="images"
               control={control}
               render={({ field }) => (
@@ -166,21 +165,24 @@ function AddNewProduct() {
                   className=" max-w-[200px]"
                 />
               )}
-            />
+            /> */}
 
             <div className="grid grid-cols-4 gap-4 my-6">
-              {preview.map((url, index) => (
-                <div key={index} className="relative">
-                  <img src={url} className="w-full h-32 object-cover rounded" />
-                  <input
-                    type="radio"
-                    name="mainImage"
-                    checked={index === mainImageIndex}
-                    onChange={() => setMainImageIndex(index)}
-                    className="absolute top-2 right-2"
+              {product && (
+                <>
+                  <img
+                    src={`${process.env.NEXT_PUBLIC_BACKEND_API}/uploads/${product.mainImage}`}
+                    className="w-full h-32 object-cover rounded"
                   />
-                </div>
-              ))}
+                  {product.otherImages.map((img: string, index: number) => (
+                    <img
+                      key={index}
+                      src={`${process.env.NEXT_PUBLIC_BACKEND_API}/uploads/${img}`}
+                      className="w-full h-32 object-cover rounded"
+                    />
+                  ))}
+                </>
+              )}
             </div>
           </div>
           <div className="flex justify-end">
@@ -191,7 +193,7 @@ function AddNewProduct() {
               onClick={handleSubmit(onSubmit)}
               isLoading={products.addLoading}
             >
-              Add product
+              Edit product
             </Button>
           </div>
         </form>
@@ -200,4 +202,4 @@ function AddNewProduct() {
   );
 }
 
-export default AddNewProduct;
+export default EditProduct;
