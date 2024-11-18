@@ -36,9 +36,11 @@ function Navigation() {
       {/* new product */}
       <div>
         <div className="flex items-center gap-3">
-          <button className="px-16 py-3 bg-[#001EB9] text-white rounded-lg hover:bg-blue-700 transition-colors">
-            New Product
-          </button>
+          <Link href="/add-new">
+            <button className="px-16 py-3 bg-[#001EB9] text-white rounded-lg hover:bg-blue-700 transition-colors">
+              New Product
+            </button>
+          </Link>
 
           <Link href="/favourite">
             <button className="py-3 px-5 border border-[#001EB9] rounded-lg hover:bg-blue-50 transition-colors">
