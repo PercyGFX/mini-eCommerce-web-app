@@ -46,7 +46,8 @@ function Tables({ products }: TableProps) {
   console.log(favorites, "favorites");
 
   // delete
-  const handleDelete = async () => {
+  const handleDelete = async (e: React.MouseEvent) => {
+    e.stopPropagation();
     dispatch(requestDeleteProduct(selectedId as any));
     setSelectedId("");
     setIsOpen(false);
