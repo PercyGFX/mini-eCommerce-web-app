@@ -54,7 +54,8 @@ function Tables({ products }: TableProps) {
   };
 
   // modal open
-  const handleOpenModal = (id: string) => {
+  const handleOpenModal = (e: React.MouseEvent, id: string) => {
+    e.stopPropagation();
     setSelectedId(id);
     setIsOpen(true);
   };
@@ -114,7 +115,7 @@ function Tables({ products }: TableProps) {
                 <div className="flex justify-end gap-3">
                   <button
                     className="text-blue-600"
-                    onClick={() => handleOpenModal(product._id)}
+                    onClick={(e) => handleOpenModal(e, product._id)}
                   >
                     <Image alt="delete" src={deleteSVG} className="h-5 w-5" />
                   </button>
@@ -161,7 +162,7 @@ function Tables({ products }: TableProps) {
             >
               Cancel
             </Button>
-            <Button color="primary" onPress={handleDelete}>
+            <Button color="primary" onClick={handleDelete}>
               Delete
             </Button>
           </ModalFooter>
