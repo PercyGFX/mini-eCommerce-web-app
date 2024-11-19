@@ -4,12 +4,14 @@ import {
   handleAddProducts,
   handleEditProducts,
   handleDeleteProducts,
+  handleSingleProducts,
 } from "./handlers/products";
 import {
   requestProducts,
   requestAddProduct,
   requestEditProduct,
   requestDeleteProduct,
+  requestSingleProduct,
 } from "../slices/products.slice";
 
 export function* watcherSaga() {
@@ -25,4 +27,8 @@ export function* watcherSaga() {
   // delete product
 
   yield takeLatest(requestDeleteProduct.type, handleDeleteProducts);
+
+  // single product
+
+  yield takeLatest(requestSingleProduct.type, handleSingleProducts);
 }

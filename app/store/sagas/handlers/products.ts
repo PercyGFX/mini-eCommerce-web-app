@@ -4,6 +4,7 @@ import {
   addProduct,
   editProduct,
   deleteProduct,
+  getSingleProduct,
 } from "../requests/products";
 import {
   handleAllProducts,
@@ -11,6 +12,7 @@ import {
   handleAddProduct,
   handleEditProduct,
   handleDeleteProduct,
+  handleSingleProduct,
   requestProducts,
 } from "../../slices/products.slice";
 import toast from "react-hot-toast";
@@ -88,5 +90,23 @@ export function* handleDeleteProducts(action: any): Generator<any, void, any> {
       errorProducts(err.response?.data?.error || "Failed to delete product")
     );
     toast.error("Failed to delete product");
+  }
+}
+
+// single product handler
+export function* handleSingleProducts(action: any): Generator<any, void, any> {
+  try {
+    const response = yield call(getSingleProduct, action.payload);
+    if (response) {
+      const { data } = response;
+      yield put(handleSingleProduct(data));
+    }
+  } catch (err: any) {
+    yield put(
+      errorProducts(
+        err.response?.data?.error || "Failed to fetch product details"
+      )
+    );
+    toast.error("Failed to fetch product details");
   }
 }

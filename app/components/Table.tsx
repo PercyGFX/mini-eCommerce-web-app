@@ -71,7 +71,11 @@ function Tables({ products }: TableProps) {
         </TableHeader>
         <TableBody>
           {products.map((product) => (
-            <TableRow key={product._id}>
+            <TableRow
+              key={product._id}
+              className="hover:bg-gray-50 cursor-pointer"
+              onClick={() => (window.location.href = `/product/${product._id}`)}
+            >
               <TableCell className="text-medium text-gray-500 font-semibold">
                 {product.sku}
               </TableCell>

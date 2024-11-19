@@ -3,6 +3,7 @@ import { error } from "console";
 
 interface IProductState {
   products: any[];
+  singleProduct: any | null;
   loading: boolean;
   addLoading?: boolean;
   error: string | null;
@@ -10,6 +11,7 @@ interface IProductState {
 
 const initialState: IProductState = {
   products: [],
+  singleProduct: null,
   loading: false,
   error: null,
 };
@@ -41,6 +43,11 @@ const productSlice = createSlice({
       state.loading = false;
       state.error = null;
     },
+    handleSingleProduct: (state, action) => {
+      state.singleProduct = action.payload?.data;
+      state.loading = false;
+      state.error = null;
+    },
 
     // requests
     requestProducts: (state) => {
@@ -53,6 +60,10 @@ const productSlice = createSlice({
       state.addLoading = true;
     },
     requestDeleteProduct: (state) => {
+      state.loading = true;
+    },
+
+    requestSingleProduct: (state) => {
       state.loading = true;
     },
 
@@ -70,10 +81,12 @@ export const {
   handleDeleteProduct,
   handleEditProduct,
   handleAllProducts,
+  handleSingleProduct,
   requestProducts,
   requestAddProduct,
   requestEditProduct,
   requestDeleteProduct,
+  requestSingleProduct,
   errorProducts,
 } = productSlice.actions;
 

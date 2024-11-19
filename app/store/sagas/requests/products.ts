@@ -39,3 +39,10 @@ export function deleteProduct(id: string) {
     }
   );
 }
+
+// get single product
+export function getSingleProduct(productId: string) {
+  return instance.get(
+    `${process.env.NEXT_PUBLIC_BACKEND_API}/product/get-product/${productId}`
+  );
+}
