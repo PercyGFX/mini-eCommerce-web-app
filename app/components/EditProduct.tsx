@@ -7,6 +7,7 @@ import { Spinner } from "@nextui-org/react";
 import { requestEditProduct } from "../store/slices/products.slice";
 import { useDispatch, useSelector } from "react-redux";
 import toast from "react-hot-toast";
+import arrowSVG from "@/public/arrow.svg";
 
 type EditProductProps = {
   id: string;
@@ -44,10 +45,11 @@ function EditProduct({ id }: EditProductProps) {
 
   return (
     <div>
-      <div className="flex items-center top-gap gap-x-6">
+      <div className="flex items-center top-gap gap-x-4">
         <h1 className=" uppercase text-4xl font-bold tracking-widest ">
           Products{" "}
         </h1>
+        <Image src={arrowSVG} alt="arrow" />
         <p className=" text-2xl text-[#001EB9] font-semibold"> Edit Product</p>
       </div>
 
@@ -172,7 +174,7 @@ function EditProduct({ id }: EditProductProps) {
               onClick={handleSubmit(onSubmit)}
               isLoading={products.addLoading}
             >
-              Edit product
+              Save Changes
             </Button>
           </div>
         </form>

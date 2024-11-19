@@ -7,6 +7,7 @@ import { Spinner } from "@nextui-org/react";
 import { requestAddProduct } from "../store/slices/products.slice";
 import { useDispatch, useSelector } from "react-redux";
 import toast from "react-hot-toast";
+import arrowSVG from "@/public/arrow.svg";
 
 function AddNewProduct() {
   const [preview, setPreview] = useState<string[]>([]);
@@ -63,10 +64,11 @@ function AddNewProduct() {
 
   return (
     <div>
-      <div className="flex items-center top-gap gap-x-6">
+      <div className="flex items-center top-gap gap-x-4">
         <h1 className=" uppercase text-4xl font-bold tracking-widest ">
           Products{" "}
         </h1>
+        <Image src={arrowSVG} alt="arrow" />
         <p className=" text-2xl text-[#001EB9] font-semibold">
           {" "}
           Add new product

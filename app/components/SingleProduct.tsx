@@ -4,6 +4,7 @@ import Image from "next/image";
 import { Card } from "@nextui-org/react";
 import { IProduct } from "../utils/types/products";
 
+
 type SingleProductProps = {
   product: IProduct;
 };
