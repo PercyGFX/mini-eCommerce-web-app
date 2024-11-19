@@ -7,10 +7,24 @@ interface IFavoriteState {
   error: string | null;
 }
 
+// local storage issue on nextjs
+const getFavoritesFromStorage = () => {
+  if (typeof window !== "undefined") {
+    const storedFavorites = window.localStorage.getItem("favorites");
+    return storedFavorites ? JSON.parse(storedFavorites) : [];
+  }
+  return [];
+};
+
+//local storage issue on nextjs
+const setFavoritesToStorage = (favorites: string[]) => {
+  if (typeof window !== "undefined") {
+    window.localStorage.setItem("favorites", JSON.stringify(favorites));
+  }
+};
+
 const initialState: IFavoriteState = {
-  favorites: localStorage.getItem("favorites")
-    ? JSON.parse(localStorage.getItem("favorites") || "[]")
-    : [],
+  favorites: getFavoritesFromStorage(),
   loading: false,
   favouriteProducts: [],
   error: null,
@@ -23,33 +37,25 @@ const favoritesSlice = createSlice({
     toggleFavorite: (state, action) => {
       const productId = action.payload;
       const index = state.favorites.indexOf(productId);
-
       if (index === -1) {
         state.favorites.push(productId);
       } else {
         state.favorites.splice(index, 1);
       }
-
       // Sync with localStorage
-      localStorage.setItem("favorites", JSON.stringify(state.favorites));
+      setFavoritesToStorage(state.favorites);
     },
-
     // sync from database
     handleFavourites: (state, action) => {
       state.favorites = action.payload.favoriteIds;
       state.favouriteProducts = action.payload.products;
       state.loading = false;
-      localStorage.setItem(
-        "favorites",
-        JSON.stringify(action.payload.favoriteIds)
-      );
+      setFavoritesToStorage(action.payload.favoriteIds);
     },
-
     //requests
     requestFavorites: (state) => {
       state.loading = true;
     },
-
     errorFavorites: (state, action) => {
       state.error = action.payload;
       state.loading = false;
@@ -65,5 +71,4 @@ export const {
 } = favoritesSlice.actions;
 
 export const favouriteReducer = favoritesSlice.reducer;
-
 export default favoritesSlice.reducer;

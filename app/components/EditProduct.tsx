@@ -69,7 +69,7 @@ function EditProduct({ id }: EditProductProps) {
                 className=" max-w-[50%]"
                 isRequired
                 isInvalid={errors.sku ? true : false}
-                errorMessage={errors.sku?.message}
+                errorMessage={errors.sku?.message as string}
               />
             )}
           />
@@ -87,7 +87,7 @@ function EditProduct({ id }: EditProductProps) {
                   isRequired
                   variant="flat"
                   isInvalid={errors.name ? true : false}
-                  errorMessage={errors.name?.message}
+                  errorMessage={errors.name?.message as string}
                 />
               )}
             />
@@ -106,7 +106,7 @@ function EditProduct({ id }: EditProductProps) {
                   isRequired
                   name="qty"
                   isInvalid={errors.name ? true : false}
-                  errorMessage={errors.name?.message}
+                  errorMessage={errors.name?.message as string}
                 />
               )}
             />
@@ -124,7 +124,7 @@ function EditProduct({ id }: EditProductProps) {
                 variant="flat"
                 name="description"
                 isInvalid={errors.description ? true : false}
-                errorMessage={errors.description?.message}
+                errorMessage={errors.description?.message as string}
               />
             )}
           />
