@@ -14,6 +14,12 @@ import {
   requestSingleProduct,
 } from "../slices/products.slice";
 
+import { requestFavorites, toggleFavorite } from "../slices/favourites.slice";
+import {
+  handleGetFavorites,
+  handleUpdateFavorites,
+} from "./handlers/favourites";
+
 export function* watcherSaga() {
   // all products
   yield takeLatest(requestProducts.type, handleAllProduct);
@@ -31,4 +37,10 @@ export function* watcherSaga() {
   // single product
 
   yield takeLatest(requestSingleProduct.type, handleSingleProducts);
+
+  // favourites get
+  yield takeLatest(requestFavorites.type, handleGetFavorites);
+
+  // favourites update
+  yield takeLatest(toggleFavorite.type, handleUpdateFavorites);
 }

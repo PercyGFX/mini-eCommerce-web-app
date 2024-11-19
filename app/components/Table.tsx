@@ -20,13 +20,17 @@ import {
 import { IProduct } from "../utils/types/products";
 import Link from "next/link";
 import { requestDeleteProduct } from "../store/slices/products.slice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import alertSVG from "@/public/alert.svg";
 import deleteSVG from "@/public/delete-icon.svg";
 import editSVG from "@/public/edit-icon.svg";
 import filledStarSVG from "@/public/starred.svg";
 import starSVG from "@/public/star.svg";
 import Image from "next/image";
+import {
+  toggleFavorite,
+  requestFavorites,
+} from "../store/slices/favourites.slice";
 
 interface TableProps {
   products: IProduct[];
@@ -37,18 +41,30 @@ function Tables({ products }: TableProps) {
   const dispatch = useDispatch();
   const [selectedId, setSelectedId] = useState<string>("");
 
-  console.log(products, "products");
+  const favorites = useSelector((state: any) => state.favourites);
 
+  console.log(favorites, "favorites");
+
+  // delete
   const handleDelete = async () => {
     dispatch(requestDeleteProduct(selectedId as any));
     setSelectedId("");
     setIsOpen(false);
   };
 
+  // modal open
   const handleOpenModal = (id: string) => {
     setSelectedId(id);
     setIsOpen(true);
   };
+
+  // toggle fav
+
+  const handleToggleFavorite = (e: React.MouseEvent, productId: string) => {
+    e.stopPropagation();
+    dispatch(toggleFavorite(productId));
+  };
+
   return (
     <div className="my-6 text-lg">
       <Table>
@@ -104,7 +120,20 @@ function Tables({ products }: TableProps) {
                   <Link href={`/edit/${product._id}`}>
                     <Image alt="edit" src={editSVG} className="h-5 w-5" />
                   </Link>
-                  <Image alt="star" src={starSVG} className="h-5 w-5" />
+                  <button
+                    onClick={(e) => handleToggleFavorite(e, product._id)}
+                    className="transition-transform hover:scale-110"
+                  >
+                    <Image
+                      alt="star"
+                      src={
+                        favorites?.favorites?.includes(product._id)
+                          ? filledStarSVG
+                          : starSVG
+                      }
+                      className="h-5 w-5"
+                    />
+                  </button>
                 </div>
               </TableCell>
             </TableRow>
