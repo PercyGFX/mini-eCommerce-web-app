@@ -123,7 +123,10 @@ function Tables({ products }: TableProps) {
                       className="h-5 w-5 min-w-[20px] min-h-[20px]"
                     />
                   </button>
-                  <Link href={`/edit/${product._id}`}>
+                  <Link
+                    href={`/edit/${product._id}`}
+                    onClick={(e) => e.stopPropagation()}
+                  >
                     <Image
                       alt="edit"
                       src={editSVG}
