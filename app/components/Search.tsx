@@ -30,7 +30,7 @@ function AllProducts({ filteredProducts, query }: any) {
       <div className="space-y-4">
         {filteredProducts.map((product: IProduct) => (
           <Link href={`/product/${product._id}`} key={product._id}>
-            <div className="border-b pb-4 hover:bg-gray-50 p-4 cursor-pointer mx-10">
+            <div className="border-b pb-4 hover:bg-gray-50 p-4 cursor-pointer md:mx-10">
               <div className="flex justify-between items-center">
                 <div>
                   <p className="text-blue-600 my-2">#{product.sku}</p>

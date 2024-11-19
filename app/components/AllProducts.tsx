@@ -6,6 +6,7 @@ import Image from "next/image";
 import Tables from "./Table";
 import { useDispatch, useSelector } from "react-redux";
 import { requestProducts } from "../store/slices/products.slice";
+import { requestFavorites } from "../store/slices/favourites.slice";
 import { Spinner } from "@nextui-org/react";
 
 function AllProducts() {
@@ -17,6 +18,7 @@ function AllProducts() {
   // get products from saga
   useEffect(() => {
     dispatch(requestProducts());
+    dispatch(requestFavorites());
   }, []);
 
   return (

@@ -18,7 +18,7 @@ export default function EditPage() {
   }, []);
 
   return (
-    <div className="min-h-screen font-[family-name:var(--font-satoshi)] max-w-[1440px] mx-auto border py-4 px-16">
+    <div className="min-h-screen font-[family-name:var(--font-satoshi)] max-w-[1440px] mx-auto border py-4 px-4 md:px-16">
       <Header />
       {products && products.products.length > 0 && params.id && (
         <EditProduct id={params.id as string} />

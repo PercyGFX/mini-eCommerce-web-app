@@ -45,7 +45,7 @@ function EditProduct({ id }: EditProductProps) {
 
   return (
     <div>
-      <div className="flex items-center top-gap gap-x-4">
+      <div className="flex flex-col md:flex-row items-center top-gap gap-x-4 gap-y-2">
         <h1 className=" uppercase text-4xl font-bold tracking-widest ">
           Products{" "}
         </h1>
@@ -66,7 +66,7 @@ function EditProduct({ id }: EditProductProps) {
                 label="SKU"
                 name="sku"
                 variant="flat"
-                className=" max-w-[50%]"
+                className=" md:max-w-[50%]"
                 isRequired
                 isInvalid={errors.sku ? true : false}
                 errorMessage={errors.sku?.message as string}
@@ -74,7 +74,7 @@ function EditProduct({ id }: EditProductProps) {
             )}
           />
 
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <Controller
               name="name"
               control={control}
@@ -148,7 +148,7 @@ function EditProduct({ id }: EditProductProps) {
               )}
             /> */}
 
-            <div className="grid grid-cols-4 gap-4 my-6">
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-4 my-6">
               {product && (
                 <>
                   <img

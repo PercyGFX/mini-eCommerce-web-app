@@ -117,10 +117,18 @@ function Tables({ products }: TableProps) {
                     className="text-blue-600"
                     onClick={(e) => handleOpenModal(e, product._id)}
                   >
-                    <Image alt="delete" src={deleteSVG} className="h-5 w-5" />
+                    <Image
+                      alt="delete"
+                      src={deleteSVG}
+                      className="h-5 w-5 min-w-[20px] min-h-[20px]"
+                    />
                   </button>
                   <Link href={`/edit/${product._id}`}>
-                    <Image alt="edit" src={editSVG} className="h-5 w-5" />
+                    <Image
+                      alt="edit"
+                      src={editSVG}
+                      className="h-5 w-5 min-w-[20px] min-h-[20px]"
+                    />
                   </Link>
                   <button
                     onClick={(e) => handleToggleFavorite(e, product._id)}
@@ -133,7 +141,7 @@ function Tables({ products }: TableProps) {
                           ? filledStarSVG
                           : starSVG
                       }
-                      className="h-5 w-5"
+                      className="h-5 w-5 min-w-[20px] min-h-[20px]"
                     />
                   </button>
                 </div>
